@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    depends_on:
+      - blog-backend
+      - blog-ui
+    volumes:
+      - ${CONF_PATH}:/etc/nginx/conf.d/default.conf
+    ports:
+      - 3002:3002
+
+  blog-ui:
+    image: shiviraj/blog-ui
+    container_name: blog-ui
+    restart: always
+    ports:
+      - 3000:3000
+
+  blog-backend:
+    image: shiviraj/blog-backend
+    container_name: blog-backend
+    restart: always
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+    ports:
+      - 3001:3001
