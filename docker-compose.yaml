@@ -17,6 +17,8 @@ services:
     image: shiviraj/blog-ui
     container_name: blog-ui
     restart: always
+    environment:
+      - BACKEND_URL=http://blog-backend:3001
     ports:
       - 3000:3000
 
@@ -24,6 +26,8 @@ services:
     image: shiviraj/blog-backend
     container_name: blog-backend
     restart: always
+    dns:
+      - 8.8.8.8
     environment:
       - MONGODB_URL=${MONGODB_URL}
     ports:
